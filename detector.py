@@ -35,3 +35,27 @@ login_attempt("192.168.1.1", False)
 
 # Test blocked IP
 login_attempt("192.168.1.1", False)
+# Simulate multiple IP login attempts
+test_ips = [
+    "192.168.1.1",
+    "192.168.1.2",
+    "192.168.1.3",
+    "192.168.1.4"
+]
+
+# Simulate login activity
+login_attempts_sequence = [
+    ("192.168.1.1", False),
+    ("192.168.1.2", False),
+    ("192.168.1.1", False),
+    ("192.168.1.3", False),
+    ("192.168.1.2", False),
+    ("192.168.1.1", False),
+    ("192.168.1.4", False),
+    ("192.168.1.1", False),
+    ("192.168.1.2", False),
+    ("192.168.1.1", False),  # This should trigger block
+]
+
+for ip, success in login_attempts_sequence:
+    login_attempt(ip, success)
