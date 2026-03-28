@@ -1,4 +1,8 @@
+import logging
 from collections import defaultdict
+
+# Setup logging
+logging.basicConfig(filename='alerts.log', level=logging.INFO, format='%(asctime)s - %(message)s')
 
 failed_attempts = defaultdict(int)
 
@@ -9,9 +13,11 @@ def login_attempt(ip, success):
         failed_attempts[ip] = 0
 
     if failed_attempts[ip] >= 5:
-        print(f"⚠️ ALERT: Possible brute-force attack from {ip}")
+        alert = f"⚠️ ALERT: Possible brute-force attack from {ip}"
+        print(alert)
+        logging.info(alert)
 
-# Simulate activity
+# Simulate attacks
 login_attempt("192.168.1.1", False)
 login_attempt("192.168.1.1", False)
 login_attempt("192.168.1.1", False)
